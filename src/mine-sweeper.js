@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+const { NotImplementedError } = require("../extensions/index.js");
 
 /**
  * In the popular Minesweeper game you have a board with some mines and those cells
@@ -23,11 +23,56 @@ const { NotImplementedError } = require('../extensions/index.js');
  *  [1, 1, 1]
  * ]
  */
-function minesweeper(/* matrix */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+function minesweeper(matrix) {
+  const resultArray = [];
+
+  const checkMines = (array, arrayIndex, index) => {
+    let returnValue = 0;
+    if (array[arrayIndex - 1] && array[arrayIndex - 1][index - 1]) {
+      const mainValue = array[arrayIndex - 1][index - 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex - 1] && array[arrayIndex - 1][index]) {
+      const mainValue = array[arrayIndex - 1][index];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex - 1] && array[arrayIndex - 1][index + 1]) {
+      const mainValue = array[arrayIndex - 1][index + 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex] && array[arrayIndex][index + 1]) {
+      const mainValue = array[arrayIndex][index + 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex + 1] && array[arrayIndex + 1][index + 1]) {
+      const mainValue = array[arrayIndex + 1][index + 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex + 1] && array[arrayIndex + 1][index]) {
+      const mainValue = array[arrayIndex + 1][index];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex + 1] && array[arrayIndex + 1][index - 1]) {
+      const mainValue = array[arrayIndex + 1][index - 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+    if (array[arrayIndex] && array[arrayIndex][index - 1]) {
+      const mainValue = array[arrayIndex][index - 1];
+      returnValue = mainValue ? returnValue + 1 : returnValue;
+    }
+
+    return returnValue;
+  };
+
+  matrix.forEach((array, arrayIndex) => {
+    const lineArray = array.map((item, index) =>
+      checkMines(matrix, arrayIndex, index)
+    );
+    resultArray.push(lineArray);
+  });
+  return resultArray;
 }
 
 module.exports = {
-  minesweeper
+  minesweeper,
 };
